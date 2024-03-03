@@ -64,14 +64,15 @@ fetch('https://restcountries.com/v3.1/all')
     .then(data => {
         const nationalitySelect = document.getElementById('nationality');
 
-        // Sort countries alphabetically by name
-        data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        // Extract country names and sort them alphabetically
+        const countryNames = data.map(country => country.name.common);
+        countryNames.sort();
 
         // Add an option for each country to the select element
-        data.forEach(country => {
+        countryNames.forEach(countryName => {
             const option = document.createElement('option');
-            option.value = country.cca3; // Use the country code as the value
-            option.textContent = country.name.common; // Use the country name as the text content
+            option.value = countryName; // Use the full country name as the value
+            option.textContent = countryName; // Use the full country name as the text content
             nationalitySelect.appendChild(option);
         });
     })
